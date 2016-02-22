@@ -6,7 +6,11 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import outros.*;
 
 /**
  *
@@ -31,10 +35,15 @@ public class InvertedIndex {
             if(flag){
                 ArrayList<WordInDoc> quantityByDoc = new ArrayList<>();
                 quantityByDoc.add(wrd);
-                temp.add(new Word(words[i],quantityByDoc));
+                Word newWord = new Word(words[i],quantityByDoc);
+                temp.add(newWord);
+            }
+            else{
+                flag = true;
             }
             i += quantity;
-      }
+        }
+        Collections.sort(temp);
       return temp;
     }
     

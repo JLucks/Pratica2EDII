@@ -1,5 +1,7 @@
 package outros;
 
+import base.*;
+
 public class MergeSort {
     
     //Metodo base do mergesort

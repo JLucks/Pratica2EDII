@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Jorge
  */
-public class Word {
+public class Word implements Comparable<Word>{
     private String word;
     private ArrayList<WordInDoc> quantityByDocs;
     
@@ -50,5 +50,10 @@ public class Word {
      */
     public void setQuantityByDocs(WordInDoc wd) {
         this.quantityByDocs.add(wd);
+    }
+
+    @Override
+    public int compareTo(Word o) {
+        return this.word.compareTo(o.word);
     }
 }

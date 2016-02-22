@@ -198,7 +198,7 @@ public class DocumentFeeder extends javax.swing.JPanel {
             JTId.setText(JTId.getText()+Sid+"\n");
             numberIds++;
             try {
-                words = InvertedIndex.getInvertedIndex(ReaderDoc.getWords(url), Sid, words);
+                InvertedIndex.getInvertedIndex(ReaderDoc.getWords(url), Sid, words);
             } catch (IOException ex) {
                 Logger.getLogger(DocumentFeeder.class.getName()).log(Level.SEVERE, null, ex);
             }
