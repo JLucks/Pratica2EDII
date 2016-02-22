@@ -13,6 +13,11 @@ public class WordInDoc {
     private String idDoc;
     private int quantity;
 
+    public WordInDoc(String idDoc, int quantity){
+        this.idDoc = idDoc;
+        this.quantity = quantity;
+    }
+    
     /**
      * @return the idDoc
      */

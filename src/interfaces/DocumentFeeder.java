@@ -6,11 +6,15 @@
 package interfaces;
 
 import base.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import outros.ReaderDoc;
 
 /**
  *
@@ -23,14 +27,16 @@ public class DocumentFeeder extends javax.swing.JPanel {
      */
     
     private JFileChooser JFCFiles;
-    private ArrayList<String> address;
-    private ArrayList<String> ids;
+    //private ArrayList<String> address;
+    //private ArrayList<String> ids;
+    private List<Word> words;
     private int numberIds;
     
     public DocumentFeeder() {
-        numberIds = 0;
-        this.address = new ArrayList<String>();
-        this.ids = new ArrayList<String>();
+        numberIds = 1;
+        //this.address = new ArrayList<String>();
+        //this.ids = new ArrayList<String>();
+        this.words = new ArrayList<>();
         initComponents();
         JFCFiles = new JFileChooser();
         FileFilter filter = new FileNameExtensionFilter("TxT file", new String[]{"txt"});
@@ -100,6 +106,11 @@ public class DocumentFeeder extends javax.swing.JPanel {
         jLabel1.setText("Selecione os Aquivos");
 
         bttCreate.setText("Gerar ID");
+        bttCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttCreateActionPerformed(evt);
+            }
+        });
 
         JTId.setEditable(false);
         JTId.setColumns(20);
@@ -135,7 +146,6 @@ public class DocumentFeeder extends javax.swing.JPanel {
                         .addComponent(bttCreate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,15 +192,24 @@ public class DocumentFeeder extends javax.swing.JPanel {
         if(JFCFiles.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             String url = JFCFiles.getSelectedFile().getAbsolutePath();
             String Sid = "Doc_" + numberIds;
-            this.address.add(url);
-            this.ids.add(Sid);
+            //this.address.add(url);
+            //this.ids.add(Sid);
             JTAddress.setText(JTAddress.getText()+url+"\n");
             JTId.setText(JTId.getText()+Sid+"\n");
             numberIds++;
+            try {
+                words = InvertedIndex.getInvertedIndex(ReaderDoc.getWords(url), Sid, words);
+            } catch (IOException ex) {
+                Logger.getLogger(DocumentFeeder.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }        
         JTId.setVisible(true);
         JTAddress.setVisible(true);
     }//GEN-LAST:event_bttSelectActionPerformed
+
+    private void bttCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCreateActionPerformed
+        InvertedIndex.printInvertedIndex(words);
+    }//GEN-LAST:event_bttCreateActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea JTAddress;

@@ -19,9 +19,9 @@ public class Word {
         this.quantityByDocs = new ArrayList<>();
     }
     
-    public Word(String word){
+    public Word(String word, ArrayList<WordInDoc> quantityByDocs){
         this.word = word;
-        this.quantityByDocs = new ArrayList<>();
+        this.quantityByDocs = quantityByDocs;
     }
     
     /**
