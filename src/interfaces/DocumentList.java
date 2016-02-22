@@ -6,6 +6,7 @@
 package interfaces;
 
 import base.*;
+import java.util.List;
 
 /**
  *
@@ -13,10 +14,17 @@ import base.*;
  */
 public class DocumentList extends javax.swing.JPanel {
 
+    private List<Word> words;
+    private List<AddressDoc> docs;
+    private int numberIds;
+    
     /**
      * Creates new form DocumentList
      */
-    public DocumentList() {
+    public DocumentList(int numberIds, List<Word> words, List<AddressDoc> docs) {
+        this.numberIds = numberIds;
+        this.words = words;
+        this.docs = docs;
         initComponents();
     }
 
@@ -29,20 +37,10 @@ public class DocumentList extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         bttGoBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JTIndices = new javax.swing.JTextArea();
 
         bttGoBack.setText("Voltar");
         bttGoBack.addActionListener(new java.awt.event.ActionListener() {
@@ -54,15 +52,24 @@ public class DocumentList extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
         jLabel1.setText("Indice Invertido");
 
+        JTIndices.setEditable(false);
+        JTIndices.setColumns(20);
+        JTIndices.setRows(5);
+        jScrollPane1.setViewportView(JTIndices);
+        for(Word word: this.words){
+            JTIndices.setText(JTIndices.getText()+word.getWord());
+            for(WordInDoc qntWord: word.getQuantityByDocs()){
+                JTIndices.setText(JTIndices.getText()+" "+qntWord.getQuantity()+" "+qntWord.getIdDoc());
+            }
+            JTIndices.setText(JTIndices.getText()+"\n");
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -71,15 +78,18 @@ public class DocumentList extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(174, 174, 174)
                                 .addComponent(bttGoBack)))
-                        .addGap(0, 128, Short.MAX_VALUE)))
+                        .addGap(0, 128, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bttGoBack)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -89,15 +99,16 @@ public class DocumentList extends javax.swing.JPanel {
     private void bttGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttGoBackActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Home());
+        Main.janela.add(new Home(this.numberIds,this.words,this.docs));
         Main.janela.setSize(615,460);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttGoBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea JTIndices;
     private javax.swing.JButton bttGoBack;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

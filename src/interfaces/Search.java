@@ -6,6 +6,7 @@
 package interfaces;
 
 import base.*;
+import java.util.List;
 
 /**
  *
@@ -13,10 +14,17 @@ import base.*;
  */
 public class Search extends javax.swing.JPanel {
 
+    private List<Word> words;
+    private List<AddressDoc> docs;
+    private int numberIds;
+    
     /**
      * Creates new form Search
      */
-    public Search() {
+    public Search(int numberIds, List<Word> words, List<AddressDoc> docs) {
+        this.numberIds = numberIds;
+        this.words = words;
+        this.docs = docs;
         initComponents();
     }
 
@@ -101,7 +109,7 @@ public class Search extends javax.swing.JPanel {
     private void bttGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttGoBackActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Home());
+        Main.janela.add(new Home(this.numberIds,this.words,this.docs));
         Main.janela.setSize(615,460);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttGoBackActionPerformed

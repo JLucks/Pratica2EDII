@@ -27,16 +27,14 @@ public class DocumentFeeder extends javax.swing.JPanel {
      */
     
     private JFileChooser JFCFiles;
-    //private ArrayList<String> address;
-    //private ArrayList<String> ids;
     private List<Word> words;
+    private List<AddressDoc> docs;
     private int numberIds;
     
-    public DocumentFeeder() {
-        numberIds = 1;
-        //this.address = new ArrayList<String>();
-        //this.ids = new ArrayList<String>();
-        this.words = new ArrayList<>();
+    public DocumentFeeder(int numberIds, List<Word> words, List<AddressDoc> docs) {
+        this.numberIds = numberIds;
+        this.words = words;
+        this.docs = docs;
         initComponents();
         JFCFiles = new JFileChooser();
         FileFilter filter = new FileNameExtensionFilter("TxT file", new String[]{"txt"});
@@ -63,7 +61,6 @@ public class DocumentFeeder extends javax.swing.JPanel {
         bttSelect = new javax.swing.JButton();
         bttGoBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        bttCreate = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTId = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
@@ -105,13 +102,6 @@ public class DocumentFeeder extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
         jLabel1.setText("Selecione os Aquivos");
 
-        bttCreate.setText("Gerar ID");
-        bttCreate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttCreateActionPerformed(evt);
-            }
-        });
-
         JTId.setEditable(false);
         JTId.setColumns(20);
         JTId.setRows(5);
@@ -142,8 +132,6 @@ public class DocumentFeeder extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addComponent(bttSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(bttCreate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,8 +160,7 @@ public class DocumentFeeder extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bttSelect)
-                    .addComponent(bttGoBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bttCreate))
+                    .addComponent(bttGoBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -181,7 +168,7 @@ public class DocumentFeeder extends javax.swing.JPanel {
     private void bttGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttGoBackActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Home());
+        Main.janela.add(new Home(this.numberIds,this.words,this.docs));
         Main.janela.setSize(615,460);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttGoBackActionPerformed
@@ -192,8 +179,7 @@ public class DocumentFeeder extends javax.swing.JPanel {
         if(JFCFiles.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             String url = JFCFiles.getSelectedFile().getAbsolutePath();
             String Sid = "Doc_" + numberIds;
-            //this.address.add(url);
-            //this.ids.add(Sid);
+            docs.add(new AddressDoc(Sid,url));
             JTAddress.setText(JTAddress.getText()+url+"\n");
             JTId.setText(JTId.getText()+Sid+"\n");
             numberIds++;
@@ -206,15 +192,10 @@ public class DocumentFeeder extends javax.swing.JPanel {
         JTId.setVisible(true);
         JTAddress.setVisible(true);
     }//GEN-LAST:event_bttSelectActionPerformed
-
-    private void bttCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCreateActionPerformed
-        InvertedIndex.printInvertedIndex(words);
-    }//GEN-LAST:event_bttCreateActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea JTAddress;
     private javax.swing.JTextArea JTId;
-    private javax.swing.JButton bttCreate;
     private javax.swing.JButton bttGoBack;
     private javax.swing.JButton bttSelect;
     private javax.swing.JLabel jLabel1;

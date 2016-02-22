@@ -67,8 +67,6 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                       <Component id="bttSelect" min="-2" pref="117" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="bttCreate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -107,7 +105,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="bttSelect" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bttGoBack" alignment="3" max="32767" attributes="0"/>
-                  <Component id="bttCreate" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -138,14 +135,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Selecione os Aquivos"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="bttCreate">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Gerar ID"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttCreateActionPerformed"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>

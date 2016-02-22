@@ -59,15 +59,5 @@ public class InvertedIndex {
             }
         }
         return count;
-    }    
-    
-    public static void printInvertedIndex(List<Word> words){
-        for(Word word: words){
-            System.out.print(word.getWord());
-            for(WordInDoc qntWord: word.getQuantityByDocs()){
-                System.out.printf(" %d %s", qntWord.getQuantity(), qntWord.getIdDoc());
-            }
-            System.out.println();
-        }
-    }
+    } 
 }

@@ -6,6 +6,8 @@
 package interfaces;
 
 import base.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,10 +15,24 @@ import base.*;
  */
 public class Home extends javax.swing.JPanel {
 
+    private List<Word> words;
+    private List<AddressDoc> docs;
+    private int numberIds;
+    
     /**
      * Creates new form Homes
      */
     public Home() {
+        this.words = new ArrayList<>();
+        this.docs = new ArrayList<>();
+        numberIds = 1;
+        initComponents();
+    }
+    
+    public Home(int numberIds, List<Word> words, List<AddressDoc> docs) {
+        this.numberIds = numberIds;
+        this.words = words;
+        this.docs = docs;
         initComponents();
     }
 
@@ -119,7 +135,7 @@ public class Home extends javax.swing.JPanel {
     private void bttAddDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttAddDocActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new DocumentFeeder());
+        Main.janela.add(new DocumentFeeder(numberIds,words,docs));
         Main.janela.setSize(620, 360);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttAddDocActionPerformed
@@ -127,21 +143,23 @@ public class Home extends javax.swing.JPanel {
     private void bttListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttListActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new DocumentList());
-        Main.janela.setSize(430, 360);
+        Main.janela.add(new DocumentList(this.numberIds,this.words,this.docs));
+        Main.janela.setSize(430, 370);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttListActionPerformed
 
     private void bttSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSearchActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Search());
+        Main.janela.add(new Search(this.numberIds,this.words,this.docs));
         Main.janela.setSize(430, 360);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttSearchActionPerformed
 
     private void bttResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttResetActionPerformed
-        //Resetar dados
+        this.numberIds = 1;
+        this.words = new ArrayList<>();
+        this.docs = new ArrayList<>();
     }//GEN-LAST:event_bttResetActionPerformed
 
 
