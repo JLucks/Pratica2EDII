@@ -24,10 +24,22 @@ public class Hash {
         Random generator = new Random();
         this.C = C;
         this.mode = mode;
-        this.hash = new Object[C];
+        startHash();
         this.P = new int[C];
         for(int i = 0; i < C; i++)
             P[i] = generator.nextInt(C * M) + 1;
+    }
+    
+    public void startHash(){
+        if(mode == 0){
+            this.hash = new ListWord[M];
+        }else if(mode == 1){
+            
+        }else if(mode == 2){
+            
+        }else{
+            
+        }
     }
     
     public void insert(Word word){
@@ -51,7 +63,8 @@ public class Hash {
     
     public void insertCollision(Word word, Object no){
         if(mode == 0){
-            
+            ListWord list =(ListWord) no;
+            list.addWord(word);
         }else if(mode == 1){
             
         }else if(mode == 2){
@@ -64,7 +77,8 @@ public class Hash {
     public Word searchCollision(String word, Object no){
         Word result = null;
         if(mode == 0){
-            
+            ListWord list =(ListWord) no;
+            result = list.search(word);
         }else if(mode == 1){
             
         }else if(mode == 2){
