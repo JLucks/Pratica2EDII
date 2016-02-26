@@ -11,7 +11,7 @@ import base.Word;
  *
  * @author Daniel
  */
-public class TreeAVL {
+public class TreeAVLWord {
     
     private NoAVL root;
     

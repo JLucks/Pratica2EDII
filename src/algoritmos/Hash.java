@@ -43,7 +43,9 @@ public class Hash {
                 hash[i] = new TreeBinaryWord();
             break;
         case 2:
-            
+            this.hash = new TreeAVLWord[getM()];
+            for(int i = 0; i < getM(); i++)
+                hash[i] = new TreeAVLWord();
             break;
         default:
             this.hash = new TreeRNWord[getM()];
@@ -87,7 +89,8 @@ public class Hash {
             binary.insertB(binary.getRoot(), word);
             break;
         case 2:
-            
+            TreeAVLWord avl = (TreeAVLWord) no;
+            avl.insertAVL(avl.getRoot(), word);
             break;
         default:
             TreeRNWord rn = (TreeRNWord) no;
@@ -108,7 +111,8 @@ public class Hash {
             result = binary.searchB(word);
             break;
         case 2:
-            
+            TreeAVLWord avl = (TreeAVLWord) no;
+            result = avl.searchAVL(word);
             break;
         default:
             TreeRNWord rn = (TreeRNWord) no;
