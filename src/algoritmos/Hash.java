@@ -30,12 +30,14 @@ public class Hash {
             P[i] = generator.nextInt(C * M) + 1;
     }
     
-    public void startHash(){
-        if(mode == 0){
-            this.hash = new ListWord[M];
-        }else if(mode == 1){
+    private void startHash(){
+        if(getMode() == 0){
+            this.hash = new ListWord[getM()];
+            for(int i = 0; i < getM(); i++)
+                hash[i] = new ListWord();
+        }else if(getMode() == 1){
             
-        }else if(mode == 2){
+        }else if(getMode() == 2){
             
         }else{
             
@@ -43,49 +45,81 @@ public class Hash {
     }
     
     public void insert(Word word){
-        int index = index(word.getWord().substring(0, (C-1)));
-        insertCollision(word, hash[index]);
+        if(word.getWord().length() >= getC()){
+            int index = index(word.getWord().substring(0, (getC()-1)));
+            insertCollision(word, getHash()[index]);
+        }
     }
     
     public Word search(String word){
         Word result = null;
-        int index = index(word.substring(0, (C-1)));
-        result = searchCollision(word,hash[index]);
+        if(word.length() >= getC()){
+            int index = index(word.substring(0, (getC()-1)));
+            result = searchCollision(word,getHash()[index]);
+        }
         return result;
     }
     
-    public int index(String key){
+    private int index(String key){
         int sum = 0;
-        for(int i = 0; i < C; i++)
+        for(int i = 0; i < key.length(); i++)
             sum += (int) key.charAt(i) * P[i];
-        return (sum % M);
+        return (sum % getM());
     }
     
-    public void insertCollision(Word word, Object no){
-        if(mode == 0){
+    private void insertCollision(Word word, Object no){
+        if(getMode() == 0){
             ListWord list =(ListWord) no;
             list.addWord(word);
-        }else if(mode == 1){
+        }else if(getMode() == 1){
             
-        }else if(mode == 2){
+        }else if(getMode() == 2){
             
         }else{
             
         }
     }
     
-    public Word searchCollision(String word, Object no){
+    private Word searchCollision(String word, Object no){
         Word result = null;
-        if(mode == 0){
+        if(getMode() == 0){
             ListWord list =(ListWord) no;
             result = list.search(word);
-        }else if(mode == 1){
+        }else if(getMode() == 1){
             
-        }else if(mode == 2){
+        }else if(getMode() == 2){
             
         }else{
             
         }
         return result;
+    }
+
+    /**
+     * @return the C
+     */
+    public int getC() {
+        return C;
+    }
+
+    /**
+     * @return the mode
+     */
+    public int getMode() {
+        return mode;
+    }
+
+    /**
+     * @return the M
+     */
+    public int getM() {
+        return M;
+    }
+
+    /**
+     * @return the hash
+     */
+    public Object[] getHash() {
+        return hash;
     }
 }

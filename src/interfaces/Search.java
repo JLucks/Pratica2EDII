@@ -9,6 +9,7 @@ import algoritmos.*;
 import base.*;
 import java.util.List;
 import javax.swing.JOptionPane;
+import outros.ReaderDoc;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Search extends javax.swing.JPanel {
         this.words = words;
         this.docs = docs;
         hash = new Hash(loadC(), loadMode());
+        loadHash();
         initComponents();
     }
 
@@ -119,14 +121,33 @@ public class Search extends javax.swing.JPanel {
     }//GEN-LAST:event_bttGoBackActionPerformed
 
     private void bttSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSearchActionPerformed
-        Word result = hash.search(JTFWord.getText());
-        JTResult.setText("Resultado:\n");
-        JTResult.setText(JTResult.getText()+result.getWord()+"\n");
-        for(WordInDoc wrd: result.getQuantityByDocs())
-            JTResult.setText(JTResult.getText()+wrd.getIdDoc()+" = "+wrd.getQuantity()+"\n");
+        JTResult.setText("Resultado:");
+        for(String word: JTFWord.getText().split("\\s")){
+            word = ReaderDoc.formatString(word);
+            JTResult.setText(JTResult.getText()+"\n\n"+word+"\n");
+            if(word.length() >= hash.getC()){
+                Word result = hash.search(word);
+                if(result != null){
+                    for(WordInDoc wrd: result.getQuantityByDocs())
+                        JTResult.setText(JTResult.getText()+wrd.getIdDoc()+" = "+wrd.getQuantity()+"\n");
+                }
+                else{
+                    JTResult.setText(JTResult.getText()+"Palavra não encontrada\n");
+                }
+            }
+            else{                
+                JTResult.setText(JTResult.getText()+"Tamanho Invalido\n");
+            }
+        }
     }//GEN-LAST:event_bttSearchActionPerformed
 
-    public int loadMode(){
+    private void loadHash(){
+        for(Word word: words){
+            hash.insert(word);
+        }
+    }
+    
+    private int loadMode(){
         int mode = -1;
         while(mode == -1){
             String sMode = JOptionPane.showInputDialog("Tratamento da colisão:Digite 0->Lista 1->Arvore Binaria 2->Arvore AVL 3->Arvore Rubro-Negra");
@@ -137,7 +158,7 @@ public class Search extends javax.swing.JPanel {
         return mode;
     }
     
-    public int loadC(){
+    private int loadC(){
         int mode = -1;
         while(mode == -1){
             String sMode = JOptionPane.showInputDialog("Digite um valor para C:");

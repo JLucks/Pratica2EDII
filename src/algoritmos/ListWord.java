@@ -64,6 +64,8 @@ public class ListWord {
             }
             atual = atual.getNext();
         }
+        if(atual == null)
+            return null;
         return atual.getWord();
     }
 }
