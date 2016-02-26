@@ -38,7 +38,9 @@ public class Hash {
                 hash[i] = new ListWord();
             break;
         case 1:
-            
+            this.hash = new BinaryT[getM()];
+            for(int i = 0; i < getM(); i++)
+                hash[i] = new BinaryT();
             break;
         case 2:
             
@@ -79,7 +81,8 @@ public class Hash {
             list.addWord(word);
             break;
         case 1:
-            
+            BinaryT binaryT = (BinaryT) no;
+            binaryT.insertBinaryT(binaryT.getRoot(), word);
             break;
         case 2:
             
@@ -98,7 +101,8 @@ public class Hash {
             result = list.search(word);
             break;
         case 1:
-            
+            BinaryT binaryT = (BinaryT) no;
+            result = binaryT.searchBinaryT(word);
             break;
         case 2:
             

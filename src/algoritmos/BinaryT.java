@@ -15,24 +15,24 @@ public class BinaryT {
     
     private NoBinary root;
     
-    public void insertBinaryT(Object T, NoBinary x, Word element){
+    public void insertBinaryT(NoBinary x, Word element){
         //Se for o primeiro nó vira Raiz
         if(getRoot() == null)
-            setRoot(x);
-        else if(x.getElement().compareTo(x.getElement()) < 0){
+            setRoot(new NoBinary(element));
+        else if(x.getElement().compareTo(element) > 0){
             //Se tiver elemento continua
             if(x.getLeft() != null)
-                insertBinaryT(T, x.getLeft(), element);
+                insertBinaryT(x.getLeft(), element);
             //Se estiver vazio insere
             else{
-                x.getLeft().setElement(element);
+                x.setLeft(new NoBinary(element));
             }
         }
         else{
             if(x.getRight() != null)
-                insertBinaryT(T, x.getRight(), element);
+                insertBinaryT(x.getRight(), element);
             else{
-                x.getRight().setElement(element);
+                x.setRight(new NoBinary(element));
             }
         }
         
@@ -44,7 +44,7 @@ public class BinaryT {
         
         while (atual != null) {
             if (!atual.getElement().getWord().equals(element)) {
-                if(atual.getElement().getWord().compareTo(element) < 0){
+                if(atual.getElement().getWord().compareTo(element) > 0){
                  atual = atual.getLeft();
                 }
                 else{

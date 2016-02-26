@@ -124,7 +124,7 @@ public class Search extends javax.swing.JPanel {
         JTResult.setText("Resultado:");
         for(String word: JTFWord.getText().split("\\s")){
             word = ReaderDoc.formatString(word);
-            JTResult.setText(JTResult.getText()+"\n\n"+word+"\n");
+            JTResult.setText(JTResult.getText()+"\n"+word+"\n");
             if(word.length() >= hash.getC()){
                 Word result = hash.search(word);
                 if(result != null){
