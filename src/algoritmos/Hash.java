@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  *
- * @author Jorge
+ * @author Jorge & Daniel
  */
 public class Hash {
     
@@ -31,16 +31,21 @@ public class Hash {
     }
     
     private void startHash(){
-        if(getMode() == 0){
+        switch(getMode()){
+        case 0:
             this.hash = new ListWord[getM()];
             for(int i = 0; i < getM(); i++)
                 hash[i] = new ListWord();
-        }else if(getMode() == 1){
+            break;
+        case 1:
             
-        }else if(getMode() == 2){
+            break;
+        case 2:
             
-        }else{
-            
+            break;
+        default:
+             
+            break;
         }
     }
     
@@ -68,29 +73,39 @@ public class Hash {
     }
     
     private void insertCollision(Word word, Object no){
-        if(getMode() == 0){
+        switch(getMode()){
+        case 0:
             ListWord list =(ListWord) no;
             list.addWord(word);
-        }else if(getMode() == 1){
+            break;
+        case 1:
             
-        }else if(getMode() == 2){
+            break;
+        case 2:
             
-        }else{
-            
+            break;
+        default:
+             
+            break;
         }
     }
     
     private Word searchCollision(String word, Object no){
         Word result = null;
-        if(getMode() == 0){
+        switch(getMode()){
+        case 0:
             ListWord list =(ListWord) no;
             result = list.search(word);
-        }else if(getMode() == 1){
+            break;
+        case 1:
             
-        }else if(getMode() == 2){
+            break;
+        case 2:
             
-        }else{
-            
+            break;
+        default:
+             
+            break;
         }
         return result;
     }
