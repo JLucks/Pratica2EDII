@@ -11,18 +11,18 @@ import base.*;
  *
  * @author Daniel
  */
-public class BinaryT {
+public class TreeBinaryWord {
     
     private NoBinary root;
     
-    public void insertBinaryT(NoBinary x, Word element){
+    public void insertB(NoBinary x, Word element){
         //Se for o primeiro nó vira Raiz
         if(x == null)
             setRoot(new NoBinary(element));
         else if(x.getElement().compareTo(element) > 0){
             //Se tiver elemento continua
             if(x.getLeft() != null)
-                insertBinaryT(x.getLeft(), element);
+                insertB(x.getLeft(), element);
             //Se estiver vazio insere
             else{
                 x.setLeft(new NoBinary(element));
@@ -30,7 +30,7 @@ public class BinaryT {
         }
         else{
             if(x.getRight() != null)
-                insertBinaryT(x.getRight(), element);
+                insertB(x.getRight(), element);
             else{
                 x.setRight(new NoBinary(element));
             }
@@ -38,7 +38,7 @@ public class BinaryT {
         
     }
     
-    public Word searchBinaryT(String element){
+    public Word searchB(String element){
         NoBinary atual = getRoot();
         while (atual != null) {
             if (!atual.getElement().getWord().equals(element)) {
@@ -51,8 +51,7 @@ public class BinaryT {
             } else {
                 break;
             }
-        }
-            
+        }            
         if(atual == null)
             return null;
         else

@@ -16,6 +16,8 @@ public class NoRN {
     private NoRN dad, left, right;
     private boolean cor;
     
+    public NoRN(){}
+    
     public NoRN(Word element){
         this.element = element;
     }

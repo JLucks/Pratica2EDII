@@ -5,6 +5,8 @@
  */
 package algoritmos;
 
+import base.Word;
+
 /**
  *
  * @author Jorge
@@ -12,6 +14,11 @@ package algoritmos;
 public class TreeRNWord {
     private NoRN root;
     private NoRN nil;
+    
+    public TreeRNWord(){
+        this.nil = new NoRN();
+        this.root = this.nil;
+    }
     
     private void leftRotate(NoRN x){
         NoRN y = x.getRight();
@@ -53,11 +60,12 @@ public class TreeRNWord {
         x.setDad(y);
     }
     
-    public void insertRB(Object T, NoRN z){
+    public void insertRN(Word word){
+        NoRN z = new NoRN(word);
         NoRN y = getNil();
         NoRN x = getRoot(); 
         while(!x.equals(getNil())){
-            x = y;
+            y = x;
             if(z.getElement().compareTo(x.getElement()) < 0){
                 x = x.getLeft();
             }
@@ -66,7 +74,7 @@ public class TreeRNWord {
             }
         }
         z.setDad(y);
-        if(y.equals(T)){
+        if(y.equals(getNil())){
             setRoot(z);
         }
         else{
@@ -80,13 +88,68 @@ public class TreeRNWord {
         z.setLeft(getNil()); 
         z.setRight(getNil()); 
         z.setCor(true);
-        insertFixupRB(z);
+        insertFixupRN(z);
     }
     
-    private void insertFixupRB(NoRN z){
-        
+    private void insertFixupRN(NoRN z){
+        NoRN y;
+        while(z.getDad().isCor()){
+            if(z.getDad().equals(z.getDad().getDad().getLeft())){
+                y = z.getDad().getDad().getRight();
+                if(y.isCor()){
+                    z.getDad().setCor(false);
+                    y.setCor(false);
+                    z.getDad().getDad().setCor(true);
+                    z = z.getDad().getDad();
+                }
+                else if(z.equals(z.getDad().getRight())){
+                    z = z.getDad();
+                    leftRotate(z);
+                    z.getDad().setCor(false);
+                    z.getDad().getDad().setCor(true);
+                    rightRotate(z.getDad().getDad());
+                }
+            }
+            else if(z.getDad().equals(z.getDad().getDad().getRight())){
+                y = z.getDad().getDad().getLeft();
+                if(y.isCor()){
+                    z.getDad().setCor(false);
+                    y.setCor(false);
+                    z.getDad().getDad().setCor(true);
+                    z = z.getDad().getDad();
+                }
+                else if(z.equals(z.getDad().getLeft())){
+                    z = z.getDad();
+                    rightRotate(z);
+                    z.getDad().setCor(false);
+                    z.getDad().getDad().setCor(true);
+                    leftRotate(z.getDad().getDad());
+                }
+            }
+        }
+        getRoot().setCor(false);
     }
 
+    public Word searchRN(String element){
+        NoRN atual = getRoot();
+        while (!atual.equals(getNil())) {
+            if (!atual.getElement().getWord().equals(element)) {
+                if(atual.getElement().getWord().compareTo(element) > 0){
+                 atual = atual.getLeft();
+                }
+                else{
+                    atual = atual.getRight();
+                }
+            } else {
+                break;
+            }
+        }            
+        if(atual.equals(getNil()))
+            return null;
+        else
+            return atual.getElement();
+    }
+    
     /**
      * @return the root
      */

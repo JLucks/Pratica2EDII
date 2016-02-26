@@ -12,40 +12,40 @@ import base.*;
  * @author Jorge
  */
 public class ListWord {
-    private CellWord first;
-    private CellWord last;
+    private NoList first;
+    private NoList last;
     private int quantityElements;
     
     /**
      * @return the first
      */
-    public CellWord getFirst() {
+    public NoList getFirst() {
         return first;
     }
 
     /**
      * @param first the first to set
      */
-    public void setFirst(CellWord first) {
+    public void setFirst(NoList first) {
         this.first = first;
     }
 
     /**
      * @return the last
      */
-    public CellWord getLast() {
+    public NoList getLast() {
         return last;
     }
 
     /**
      * @param last the last to set
      */
-    public void setLast(CellWord last) {
+    public void setLast(NoList last) {
         this.last = last;
     }
     
     public void addWord(Word elemento) {
-        CellWord nova = new CellWord(elemento);
+        NoList nova = new NoList(elemento);
         if (this.quantityElements == 0) {
             this.first = nova;
             this.last = this.first;
@@ -57,7 +57,7 @@ public class ListWord {
     }
     
     public Word search(String elemento) {
-        CellWord atual = this.first;
+        NoList atual = this.first;
         while (atual != null) {
             if (atual.getWord().getWord().equals(elemento)) {
                 break;

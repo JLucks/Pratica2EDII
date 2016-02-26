@@ -38,15 +38,17 @@ public class Hash {
                 hash[i] = new ListWord();
             break;
         case 1:
-            this.hash = new BinaryT[getM()];
+            this.hash = new TreeBinaryWord[getM()];
             for(int i = 0; i < getM(); i++)
-                hash[i] = new BinaryT();
+                hash[i] = new TreeBinaryWord();
             break;
         case 2:
             
             break;
         default:
-             
+            this.hash = new TreeRNWord[getM()];
+            for(int i = 0; i < getM(); i++)
+                hash[i] = new TreeRNWord();
             break;
         }
     }
@@ -81,14 +83,15 @@ public class Hash {
             list.addWord(word);
             break;
         case 1:
-            BinaryT binaryT = (BinaryT) no;
-            binaryT.insertBinaryT(binaryT.getRoot(), word);
+            TreeBinaryWord binary = (TreeBinaryWord) no;
+            binary.insertB(binary.getRoot(), word);
             break;
         case 2:
             
             break;
         default:
-             
+            TreeRNWord rn = (TreeRNWord) no;
+            rn.insertRN(word);
             break;
         }
     }
@@ -101,14 +104,15 @@ public class Hash {
             result = list.search(word);
             break;
         case 1:
-            BinaryT binaryT = (BinaryT) no;
-            result = binaryT.searchBinaryT(word);
+            TreeBinaryWord binary = (TreeBinaryWord) no;
+            result = binary.searchB(word);
             break;
         case 2:
             
             break;
         default:
-             
+            TreeRNWord rn = (TreeRNWord) no;
+            result = rn.searchRN(word);
             break;
         }
         return result;

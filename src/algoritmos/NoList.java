@@ -11,11 +11,11 @@ import base.*;
  *
  * @author Jorge
  */
-public class CellWord {
+public class NoList {
     private Word word;
-    private CellWord next;
+    private NoList next;
 
-    public CellWord(Word word){
+    public NoList(Word word){
         this.word = word;
     }
     
@@ -29,14 +29,14 @@ public class CellWord {
     /**
      * @return the next
      */
-    public CellWord getNext() {
+    public NoList getNext() {
         return next;
     }
 
     /**
      * @param next the next to set
      */
-    public void setNext(CellWord next) {
+    public void setNext(NoList next) {
         this.next = next;
     }
     
