@@ -17,7 +17,7 @@ public class BinaryT {
     
     public void insertBinaryT(NoBinary x, Word element){
         //Se for o primeiro nó vira Raiz
-        if(getRoot() == null)
+        if(x == null)
             setRoot(new NoBinary(element));
         else if(x.getElement().compareTo(element) > 0){
             //Se tiver elemento continua
@@ -39,9 +39,7 @@ public class BinaryT {
     }
     
     public Word searchBinaryT(String element){
-        
         NoBinary atual = getRoot();
-        
         while (atual != null) {
             if (!atual.getElement().getWord().equals(element)) {
                 if(atual.getElement().getWord().compareTo(element) > 0){
