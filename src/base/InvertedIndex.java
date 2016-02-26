@@ -18,13 +18,14 @@ import outros.*;
  */
 public class InvertedIndex {
     
-    public static List<Word> getInvertedIndex(String[] words, String idDoc, List<Word> lastInvertedIndex){
+    public static List<Word> getInvertedIndex(String[] words, AddressDoc doc, List<Word> lastInvertedIndex){
         List<Word> temp = lastInvertedIndex;
         int i = 0, quantity;
         boolean flag = true;
         while(i < words.length){
             quantity = countWords(words, i);
-            WordInDoc wrd = new WordInDoc(idDoc,quantity);
+            doc.addNumberWords();
+            WordInDoc wrd = new WordInDoc(doc.getIdDoc(),quantity);
             for(Word w : temp){
                 if(words[i].equals(w.getWord())){
                     w.getQuantityByDocs().add(wrd);

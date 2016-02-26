@@ -128,8 +128,10 @@ public class Search extends javax.swing.JPanel {
             if(word.length() >= hash.getC()){
                 Word result = hash.search(word);
                 if(result != null){
-                    for(WordInDoc wrd: result.getQuantityByDocs())
-                        JTResult.setText(JTResult.getText()+wrd.getIdDoc()+" = "+wrd.getQuantity()+"\n");
+                    WordInDoc[] resultDocs = result.getQuantityByDocs().toArray(new WordInDoc[result.getQuantityByDocs().size()]);
+                    ordinateByRelevance(resultDocs);
+                    for(int i = 0; i < resultDocs.length; i++)
+                        JTResult.setText(JTResult.getText()+resultDocs[i].getIdDoc()+" = "+resultDocs[i].getQuantity()+"\n");
                 }
                 else{
                     JTResult.setText(JTResult.getText()+"Palavra não encontrada\n");
@@ -141,6 +143,40 @@ public class Search extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bttSearchActionPerformed
 
+    private void ordinateByRelevance(WordInDoc[] A){
+        WordInDoc aux;
+        int N = this.docs.size();
+        int d = A.length;
+        int f1, f2, n1, n2;
+        double w1, w2, r1, r2;
+        for(int i = 0; i < d; i++){
+            for(int j = (i + 1); j < d; j++){
+                n1 = getNumberWords(A[i].getIdDoc());
+                n2 = getNumberWords(A[j].getIdDoc());
+                f1 = A[i].getQuantity();
+                f2 = A[j].getQuantity();
+                w1 = f1 * (Math.log(N)/d);
+                w2 = f2 * (Math.log(N)/d);
+                r1 = (1/n1) * w1;
+                r2 = (1/n2) * w2;
+                if(r1 < r2){
+                    aux = A[i];
+                    A[i] = A[j];
+                    A[j] = aux;
+                }
+            }
+        }
+    }
+    
+    private int getNumberWords(String id){
+        for(AddressDoc documents:this.docs){
+            if(documents.getIdDoc().equals(id)){
+                return documents.getNumberWords();
+            }
+        }
+        return 0;
+    }
+    
     private void loadHash(){
         for(Word word: words){
             hash.insert(word);

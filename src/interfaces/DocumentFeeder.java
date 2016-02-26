@@ -179,12 +179,13 @@ public class DocumentFeeder extends javax.swing.JPanel {
         if(JFCFiles.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             String url = JFCFiles.getSelectedFile().getAbsolutePath();
             String Sid = "Doc_" + numberIds;
-            docs.add(new AddressDoc(Sid,url));
+            AddressDoc doc = new AddressDoc(Sid,url);
             JTAddress.setText(JTAddress.getText()+url+"\n");
             JTId.setText(JTId.getText()+Sid+"\n");
             numberIds++;
             try {
-                InvertedIndex.getInvertedIndex(ReaderDoc.getWords(url), Sid, words);
+                InvertedIndex.getInvertedIndex(ReaderDoc.getWords(url), doc, words);                
+                docs.add(doc);
             } catch (IOException ex) {
                 Logger.getLogger(DocumentFeeder.class.getName()).log(Level.SEVERE, null, ex);
             }

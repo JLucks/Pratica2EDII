@@ -12,10 +12,18 @@ package base;
 public class AddressDoc {
     private String idDoc;
     private String address;
+    private int numberWords;
 
     public AddressDoc(String idDoc, String address){
         this.idDoc = idDoc;
         this.address = address;
+        this.numberWords = 0;
+    }
+    
+    public AddressDoc(String idDoc, String address, int numberWords){
+        this.idDoc = idDoc;
+        this.address = address;
+        this.numberWords = numberWords;
     }
     
     /**
@@ -44,5 +52,23 @@ public class AddressDoc {
      */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    /**
+     * @return the numberWords
+     */
+    public int getNumberWords() {
+        return numberWords;
+    }
+
+    /**
+     * @param numberWords the numberWords to set
+     */
+    public void setNumberWords(int numberWords) {
+        this.numberWords = numberWords;
+    }
+    
+    public void addNumberWords() {
+        this.numberWords++;
     }
 }
