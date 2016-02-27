@@ -15,19 +15,22 @@ public class TreeBinaryWord {
     
     private NoBinary root;
     
+    // Insere na Ávore Binária
     public void insertB(NoBinary x, Word element){
-        //Se for o primeiro nó vira Raiz
+        // Se for o primeiro nó, vira Raiz
         if(x == null)
             setRoot(new NoBinary(element));
+        // Se o nó atual for maior que o novo, vai para esquerda
         else if(x.getElement().compareTo(element) > 0){
-            //Se tiver elemento continua
+            // Se tiver elemento continua
             if(x.getLeft() != null)
                 insertB(x.getLeft(), element);
-            //Se estiver vazio insere
+            // Se estiver vazio insere
             else{
                 x.setLeft(new NoBinary(element));
             }
         }
+        // Senão, vai para direita
         else{
             if(x.getRight() != null)
                 insertB(x.getRight(), element);
@@ -38,6 +41,7 @@ public class TreeBinaryWord {
         
     }
     
+    // Busca na Árvore Binária
     public Word searchB(String element){
         NoBinary atual = getRoot();
         while (atual != null) {
