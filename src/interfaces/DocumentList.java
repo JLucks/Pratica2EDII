@@ -106,7 +106,7 @@ public class DocumentList extends javax.swing.JPanel {
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttGoBackActionPerformed
 
-    public String loadNameDoc(String idDoc){
+    private String loadNameDoc(String idDoc){
         String nameDoc = null;
         for(AddressDoc doc: this.docs){
             if(idDoc.equals(doc.getIdDoc())){

@@ -7,6 +7,8 @@ package interfaces;
 
 import algoritmos.*;
 import base.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import outros.ReaderDoc;
@@ -20,6 +22,7 @@ public class Search extends javax.swing.JPanel {
     private List<Word> words;
     private List<AddressDoc> docs;
     private int numberIds;
+    private double limit;
     private Hash hash;
     
     /**
@@ -122,50 +125,67 @@ public class Search extends javax.swing.JPanel {
 
     private void bttSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSearchActionPerformed
         JTResult.setText("Resultado:");
+        List<Word> result = new ArrayList<>();
         for(String word: JTFWord.getText().split("\\s")){
             word = ReaderDoc.formatString(word);
-            JTResult.setText(JTResult.getText()+"\n"+word+"\n");
             if(word.length() >= hash.getC()){
-                Word result = hash.search(word);
-                if(result != null){
-                    WordInDoc[] resultDocs = result.getQuantityByDocs().toArray(new WordInDoc[result.getQuantityByDocs().size()]);
-                    ordinateByRelevance(resultDocs);
-                    for(int i = 0; i < resultDocs.length; i++)
-                        JTResult.setText(JTResult.getText()+resultDocs[i].getIdDoc()+" = "+resultDocs[i].getQuantity()+"\n");
+                Word rs = hash.search(word);
+                if(rs != null){
+                    result.add(rs);                    
                 }
-                else{
-                    JTResult.setText(JTResult.getText()+"Palavra não encontrada\n");
-                }
-            }
-            else{                
-                JTResult.setText(JTResult.getText()+"Tamanho Invalido\n");
             }
         }
+        List<String> namesDocs = ordinateByRelevance(result);
+        for(String nameDoc: namesDocs)
+            JTResult.setText(JTResult.getText()+"\n"+ loadNameDoc(nameDoc));
     }//GEN-LAST:event_bttSearchActionPerformed
 
-    private void ordinateByRelevance(WordInDoc[] A){
-        WordInDoc aux;
-        int N = this.docs.size();
-        int d = A.length;
-        int f1, f2, n1, n2;
-        double w1, w2, r1, r2;
-        for(int i = 0; i < d; i++){
-            for(int j = (i + 1); j < d; j++){
-                n1 = getNumberWords(A[i].getIdDoc());
-                n2 = getNumberWords(A[j].getIdDoc());
-                f1 = A[i].getQuantity();
-                f2 = A[j].getQuantity();
-                w1 = f1 * (Math.log(N)/d);
-                w2 = f2 * (Math.log(N)/d);
-                r1 = (1/n1) * w1;
-                r2 = (1/n2) * w2;
-                if(r1 < r2){
-                    aux = A[i];
-                    A[i] = A[j];
-                    A[j] = aux;
+    private List<String> ordinateByRelevance(List<Word> A){
+        List<String> result = new ArrayList<>();
+        Relevance[] r = ordinateRelevance(loadRelevance(A));
+        int i = 0;
+        while(i < r.length){
+            if(r[i].getRelevance() < getLimit()){
+                break;
+            }
+            else{
+                result.add(r[i].getIdDoc());
+            }
+            i++;
+        }
+        return result;
+    }
+    
+    private Relevance[] ordinateRelevance(List<Relevance> A){
+        Collections.sort(A);
+        Relevance[] result = A.toArray(new Relevance[A.size()]);                
+        return result;
+    }
+    
+    private List<Relevance> loadRelevance(List<Word> A){
+        List<Relevance> result = new ArrayList<>();
+        Relevance relevance;
+        boolean exist = false;
+        for(Word word: A){
+            for(WordInDoc doc: word.getQuantityByDocs()){
+                for(Relevance rs: result){
+                    if(rs.getIdDoc().equals(doc.getIdDoc())){
+                        exist = true;
+                        rs.addW(doc.getQuantity(), this.words.size(), word.getQuantityByDocs().size());
+                        break;
+                    }
+                }
+                if(!exist){
+                    relevance = new Relevance(doc.getIdDoc(), getNumberWords(doc.getIdDoc()));
+                    relevance.addW(doc.getQuantity(), this.words.size(), word.getQuantityByDocs().size());
+                    result.add(relevance);
+                }
+                else{
+                    exist = false;
                 }
             }
         }
+        return result;
     }
     
     private int getNumberWords(String id){
@@ -186,7 +206,7 @@ public class Search extends javax.swing.JPanel {
     private int loadMode(){
         int mode = -1;
         while(mode == -1){
-            String sMode = JOptionPane.showInputDialog("Tratamento da colisão:Digite 0->Lista 1->Arvore Binaria 2->Arvore AVL 3->Arvore Rubro-Negra");
+            String sMode = JOptionPane.showInputDialog("Tratamento da colisão:Digite 0->Lista\t1->Arvore Binaria\t2->Arvore AVL\t3->Arvore Rubro-Negra");
             if(sMode.equals("0")||sMode.equals("1")||sMode.equals("2")||sMode.equals("3")){
 		mode = Integer.parseInt(sMode);	
             }
@@ -207,6 +227,29 @@ public class Search extends javax.swing.JPanel {
         }
         return mode;
     }
+    
+    private String loadNameDoc(String idDoc){
+        String nameDoc = null;
+        for(AddressDoc doc: this.docs){
+            if(idDoc.equals(doc.getIdDoc())){
+                nameDoc = doc.getAddress().substring(doc.getAddress().lastIndexOf("\\")+1, doc.getAddress().length() - 1);
+            }
+        }
+        return nameDoc;
+    }
+
+    
+    public void setLimit(double l){
+        this.limit = l;
+    }
+    
+    
+    /**
+     * @return the limit
+     */
+    public double getLimit() {
+        return limit;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JTFWord;
@@ -216,4 +259,5 @@ public class Search extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
 }

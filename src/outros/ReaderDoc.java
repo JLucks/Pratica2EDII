@@ -25,7 +25,7 @@ public class ReaderDoc {
           String word = scanner.next();
           temp.add(formatString(word));
         }
-        words = temp.toArray(new String[0]);
+        words = temp.toArray(new String[temp.size()]);
         words = new MergeSort().mergeSort(words);
         return words;
     }
