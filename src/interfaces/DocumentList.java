@@ -59,10 +59,10 @@ public class DocumentList extends javax.swing.JPanel {
         JTIndices.setRows(5);
         jScrollPane1.setViewportView(JTIndices);
         for(Word word: this.words){
+            JTIndices.setText(JTIndices.getText()+word.getWord()+" --> ");
             for(WordInDoc qntWord: word.getQuantityByDocs()){
                 JTIndices.setText(JTIndices.getText()+this.loadNameDoc(qntWord.getIdDoc())+":="+qntWord.getQuantity()+"   ");
             }
-            JTIndices.setText(JTIndices.getText()+"   --> "+word.getWord());
             JTIndices.setText(JTIndices.getText()+"\n");
         }
 

@@ -84,7 +84,7 @@
             <Property name="rows" type="int" value="5"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="for(Word word: this.words){    &#xa;    for(WordInDoc qntWord: word.getQuantityByDocs()){&#xa;        JTIndices.setText(JTIndices.getText()+this.loadNameDoc(qntWord.getIdDoc())+&quot;:=&quot;+qntWord.getQuantity()+&quot;   &quot;);&#xa;    }&#xa;    JTIndices.setText(JTIndices.getText()+&quot;   --&gt; &quot;+word.getWord());&#xa;    JTIndices.setText(JTIndices.getText()+&quot;\n&quot;);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="for(Word word: this.words){   &#xa;    JTIndices.setText(JTIndices.getText()+word.getWord()+&quot; --&gt; &quot;);&#xa;    for(WordInDoc qntWord: word.getQuantityByDocs()){&#xa;        JTIndices.setText(JTIndices.getText()+this.loadNameDoc(qntWord.getIdDoc())+&quot;:=&quot;+qntWord.getQuantity()+&quot;   &quot;);&#xa;    }    &#xa;    JTIndices.setText(JTIndices.getText()+&quot;\n&quot;);&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>

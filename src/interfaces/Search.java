@@ -232,7 +232,7 @@ public class Search extends javax.swing.JPanel {
         String nameDoc = null;
         for(AddressDoc doc: this.docs){
             if(idDoc.equals(doc.getIdDoc())){
-                nameDoc = doc.getAddress().substring(doc.getAddress().lastIndexOf("\\")+1, doc.getAddress().length() - 1);
+                nameDoc = doc.getAddress().substring(doc.getAddress().lastIndexOf("\\")+1, doc.getAddress().length());
             }
         }
         return nameDoc;
