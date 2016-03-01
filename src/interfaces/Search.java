@@ -24,6 +24,7 @@ public class Search extends javax.swing.JPanel {
     private int numberIds;
     private double limit;
     private Hash hash;
+    private long timeStart, timeEnd;
     
     /**
      * Creates new form Search
@@ -32,7 +33,9 @@ public class Search extends javax.swing.JPanel {
         this.numberIds = numberIds;
         this.words = words;
         this.docs = docs;
-        hash = new Hash(loadC(), loadMode());
+        this.hash = new Hash(loadC(), loadMode());
+        resetTemp();
+        printIdHash();
         loadHash();
         initComponents();
     }
@@ -128,8 +131,12 @@ public class Search extends javax.swing.JPanel {
         List<Word> result = new ArrayList<>();
         for(String word: JTFWord.getText().split("\\s")){
             word = ReaderDoc.formatString(word);
-            if(word.length() >= hash.getC()){
-                Word rs = hash.search(word);
+            if(word.length() >= this.hash.getC()){
+                this.timeStart = System.currentTimeMillis();
+                Word rs = this.hash.search(word);                
+                this.timeEnd = System.currentTimeMillis();
+                System.out.println("Tempo de Execução da Busca da palavra "+word+" : "+(this.timeEnd-this.timeStart)*0.001);
+                resetTemp();
                 if(rs != null){
                     result.add(rs);                    
                 }
@@ -140,6 +147,29 @@ public class Search extends javax.swing.JPanel {
             JTResult.setText(JTResult.getText()+"\n"+ loadNameDoc(nameDoc));
     }//GEN-LAST:event_bttSearchActionPerformed
 
+    private void printIdHash(){
+        System.out.print("Hash com resolução de conflito via ");
+        switch(this.hash.getMode()){
+            case 0:
+                System.out.println("Lista Encadeada");
+                break;
+            case 1:
+                System.out.println("Árvore Binaria");
+                break;
+            case 2:
+                System.out.println("Árvore AVL");
+                break;
+            default:
+                System.out.println("Árvore Rubro-Negra");
+                break;
+        }
+    }
+    
+    private void resetTemp(){        
+        this.timeStart = 0L;
+        this.timeEnd = 0L;
+    }
+    
     private List<String> ordinateByRelevance(List<Word> A){
         List<String> result = new ArrayList<>();
         Relevance[] r = ordinateRelevance(loadRelevance(A));
@@ -198,9 +228,13 @@ public class Search extends javax.swing.JPanel {
     }
     
     private void loadHash(){
+        this.timeStart = System.currentTimeMillis();
         for(Word word: words){
-            hash.insert(word);
+            this.hash.insert(word);
         }
+        this.timeEnd = System.currentTimeMillis();
+        System.out.println("Tempo de Execução da Inserção: "+(timeEnd-timeStart)*0.001);
+        resetTemp();
     }
     
     private int loadMode(){
