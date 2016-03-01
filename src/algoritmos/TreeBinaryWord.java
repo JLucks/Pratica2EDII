@@ -9,7 +9,7 @@ import base.*;
 
 /**
  *
- * @author Daniel
+ * @authors Jorge & Daniel
  */
 public class TreeBinaryWord {
     
@@ -43,23 +43,23 @@ public class TreeBinaryWord {
     
     // Busca na Árvore Binária
     public Word searchB(String element){
-        NoBinary atual = getRoot();
-        while (atual != null) {
-            if (!atual.getElement().getWord().equals(element)) {
-                if(atual.getElement().getWord().compareTo(element) > 0){
-                 atual = atual.getLeft();
+        NoBinary atual = getRoot(); //No que ira percorrer
+        while (atual != null) { //Enquanto não for null
+            if (!atual.getElement().getWord().equals(element)) {    //Verifica se é igual
+                if(atual.getElement().getWord().compareTo(element) > 0){    //Verifica se é menor
+                 atual = atual.getLeft();   //Vai para esquerda
                 }
                 else{
-                    atual = atual.getRight();
+                    atual = atual.getRight();   //Vai para direita
                 }
             } else {
                 break;
             }
         }            
-        if(atual == null)
+        if(atual == null)   //Verifica se não encontrou
             return null;
         else
-            return atual.getElement();
+            return atual.getElement();  //Retorna o elemento encontrado
     }
 
     public NoBinary getRoot() {

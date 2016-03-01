@@ -7,12 +7,13 @@ package base;
 
 /**
  *
- * @author jluck_000
+ * @authors Jorge & Daniel
  */
 public class Relevance implements Comparable<Relevance>{
-    private String idDoc;
-    private float w;
-    private int numberWords;
+    //Variaveis
+    private String idDoc;   //Id do documento
+    private float w;    //W do calculo de relevancia
+    private int numberWords;    //Numero de palavras do documento
 
     public Relevance(String id, int number){
         this.idDoc = id;
@@ -28,15 +29,16 @@ public class Relevance implements Comparable<Relevance>{
     }
 
     public float getRelevance() { 
-        return (1f / this.numberWords) * this.w;
+        return (1f / this.numberWords) * this.w;    //Função de calculo de relevancia
     }
 
     public void addW(int f, int N, int dt) {
-        this.w += f * (Math.log10(N)/dt);        
+        this.w += f * (Math.log10(N)/dt);   //Calculo do w da equação de relevância
     }
 
     @Override
-    public int compareTo(Relevance o) {
+    //Função de Comparação da relevancia decrescente
+    public int compareTo(Relevance o) { 
         if(getRelevance() < o.getRelevance()){
             return 1;
         }

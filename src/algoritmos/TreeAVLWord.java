@@ -9,7 +9,7 @@ import base.Word;
 
 /**
  *
- * @author Daniel
+ * @authors Jorge & Daniel
  */
 public class TreeAVLWord {
     
@@ -117,23 +117,23 @@ public class TreeAVLWord {
     
     // Busca na Árvore AVL
     public Word searchAVL(String element){
-        NoAVL cur = getRoot();
-        while (cur != null) {
-            if (!cur.getElement().getWord().equals(element)) {
-                if(cur.getElement().getWord().compareTo(element) > 0){
-                 cur = cur.getLeft();
+        NoAVL cur = getRoot();  //No que ira percorrer
+        while (cur != null) {   //Enquanto não for null
+            if (!cur.getElement().getWord().equals(element)) {  //Verifica se é igual
+                if(cur.getElement().getWord().compareTo(element) > 0){  //Verifica se é menor
+                 cur = cur.getLeft();   //Vai para esquerda
                 }
                 else{
-                    cur = cur.getRight();
+                    cur = cur.getRight();   //Vai para direita
                 }
             } else {
                 break;
             }
         }            
-        if(cur == null)
+        if(cur == null) //Verifica se não encontrou
             return null;
         else
-            return cur.getElement();
+            return cur.getElement();    //Retorna o elemento encontrado
     }
 
     public NoAVL getRoot() {

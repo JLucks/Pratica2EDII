@@ -9,7 +9,7 @@ import base.*;
 
 /**
  *
- * @author Jorge
+ * @authors Jorge & Daniel
  */
 public class NoRN {
     private Word element;

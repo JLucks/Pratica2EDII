@@ -7,7 +7,6 @@ package interfaces;
 
 import base.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +17,7 @@ import outros.ReaderDoc;
 
 /**
  *
- * @author jluck_000
+ * @authors Jorge & Daniel
  */
 public class DocumentFeeder extends javax.swing.JPanel {
     
@@ -32,12 +31,12 @@ public class DocumentFeeder extends javax.swing.JPanel {
     private int numberIds;
     
     public DocumentFeeder(int numberIds, List<Word> words, List<AddressDoc> docs) {
-        this.numberIds = numberIds;
-        this.words = words;
-        this.docs = docs;
+        this.numberIds = numberIds; //Id atual
+        this.words = words; //Indice Invertido atual
+        this.docs = docs;   //Documentos atuais
         initComponents();
         JFCFiles = new JFileChooser();
-        FileFilter filter = new FileNameExtensionFilter("TxT file", new String[]{"txt"});
+        FileFilter filter = new FileNameExtensionFilter("TxT file", new String[]{"txt"});   //Mostrar e escolher somentes txts
         JFCFiles.setDialogTitle("Selecionar Arquivo");
         JFCFiles.setFileFilter(filter);
         JFCFiles.addChoosableFileFilter(filter);
@@ -123,6 +122,8 @@ public class DocumentFeeder extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(135, 135, 135)
                 .addComponent(jLabel2)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(89, 89, 89))
@@ -140,19 +141,19 @@ public class DocumentFeeder extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bttGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(191, 191, 191)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
@@ -168,7 +169,7 @@ public class DocumentFeeder extends javax.swing.JPanel {
     private void bttGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttGoBackActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Home(this.numberIds,this.words,this.docs));
+        Main.janela.add(new Home(this.numberIds,this.words,this.docs)); //Chama a janela Home passando o id, indice invertido, documentos
         Main.janela.setSize(615,460);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttGoBackActionPerformed
@@ -178,14 +179,14 @@ public class DocumentFeeder extends javax.swing.JPanel {
         JTId.setVisible(false);
         if(JFCFiles.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             String url = JFCFiles.getSelectedFile().getAbsolutePath();
-            String Sid = "Doc_" + numberIds;
-            AddressDoc doc = new AddressDoc(Sid,url);
-            JTAddress.setText(JTAddress.getText()+url+"\n");
-            JTId.setText(JTId.getText()+Sid+"\n");
-            numberIds++;
+            String Sid = "Doc_" + numberIds;    //Cria um id
+            AddressDoc doc = new AddressDoc(Sid,url);   //Cria um documento
+            JTAddress.setText(JTAddress.getText()+url+"\n");    //Mostra na janela o caminho
+            JTId.setText(JTId.getText()+Sid+"\n");  //Mostra na janela o id
+            numberIds++;    //Imcrementa o id
             try {
-                InvertedIndex.getInvertedIndex(ReaderDoc.getWords(url), doc, words);                
-                docs.add(doc);
+                InvertedIndex.getInvertedIndex(ReaderDoc.getWords(url), doc, words);    //Chamada a função para criação do indice invertido         
+                docs.add(doc);  //Adiciona o documento a lista de documentos
             } catch (IOException ex) {
                 Logger.getLogger(DocumentFeeder.class.getName()).log(Level.SEVERE, null, ex);
             }

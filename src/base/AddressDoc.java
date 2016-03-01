@@ -7,12 +7,13 @@ package base;
 
 /**
  *
- * @author jluck_000
+ * @authors Jorge & Daniel
  */
 public class AddressDoc {
-    private String idDoc;
-    private String address;
-    private int numberWords;
+    //Variaveis
+    private String idDoc;   //Id do documento
+    private String address; //Caminho para o documento
+    private int numberWords;    //Numero de termos no documento
 
     public AddressDoc(String idDoc, String address){
         this.idDoc = idDoc;
@@ -68,6 +69,7 @@ public class AddressDoc {
         this.numberWords = numberWords;
     }
     
+    //Incrementa o numero de termos do documento
     public void addNumberWords() {
         this.numberWords++;
     }

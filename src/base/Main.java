@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Jorge
+ * @authors Jorge & Daniel
  */
 public class Main {
 
@@ -19,14 +19,14 @@ public class Main {
      */
     
     public static final String nome = "Looking Words";	//Nome da janela
-    public static JFrame janela = new JFrame(nome);
+    public static JFrame janela = new JFrame(nome); //Cria Janela
     
     public static void main(String[] args) {
-        janela.setSize(615,460);
-        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janela.add(new Home());
-        janela.setLocationRelativeTo(null);
-        janela.setVisible(true);
+        janela.setSize(615,460);    //Tamalho da janela
+        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //Função Close da janela
+        janela.add(new Home()); //Adiciona painel Home
+        janela.setLocationRelativeTo(null); //Centraliza janela
+        janela.setVisible(true);    //Mostra janela
     }
     
 }

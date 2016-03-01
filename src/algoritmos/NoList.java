@@ -9,7 +9,7 @@ import base.*;
 
 /**
  *
- * @author Jorge
+ * @authors Jorge & Daniel
  */
 public class NoList {
     private Word word;

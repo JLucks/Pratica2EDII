@@ -9,12 +9,13 @@ import base.*;
 
 /**
  *
- * @author Jorge
+ * @authors Jorge & Daniel
  */
 public class ListWord {
-    private NoList first;
-    private NoList last;
-    private int quantityElements;
+    //Variaveis
+    private NoList first;   //Primeiro elemento da lista
+    private NoList last;    //Ultimo elemento da lista
+    private int quantityElements;   //Quantidade de elementos da lista
     
     /**
      * @return the first
@@ -44,28 +45,30 @@ public class ListWord {
         this.last = last;
     }
     
+    //Função que adiciona uma Word na lista
     public void addWord(Word elemento) {
-        NoList nova = new NoList(elemento);
-        if (this.quantityElements == 0) {
-            this.first = nova;
-            this.last = this.first;
+        NoList nova = new NoList(elemento); //Cria um novo no para a lista
+        if (this.quantityElements == 0) {   //Verifica se a lista esta vazia
+            this.first = nova;  //O primeiro elemento sera o novo
+            this.last = this.first; //O ultimo elemento tambem sera o novo
         } else {
-            this.last.setNext(nova);
-            this.last = nova;      
+            this.last.setNext(nova);    //Insere o novo elemento apos o ultimo
+            this.last = nova;   //O ultimo elemento sera o novo
         }
-        this.quantityElements++;
+        this.quantityElements++;    //Incrementa a quantidade de elementos da lista
     }
     
+    //Função que procura uma palavra na lista
     public Word search(String elemento) {
-        NoList atual = this.first;
-        while (atual != null) {
-            if (atual.getWord().getWord().equals(elemento)) {
-                break;
+        NoList atual = this.first;  //Cria uma variavel no para percorrer a lista
+        while (atual != null) { //Enquanto não terminar a lista
+            if (atual.getWord().getWord().equals(elemento)) {   //Verifico se o elemento tem a palavra da busca
+                break;  //Caso tenha para e vai embora com o no que contem a palavra
             }
-            atual = atual.getNext();
+            atual = atual.getNext();    //O no percorre vai para o proximo
         }
-        if(atual == null)
-            return null;
-        return atual.getWord();
+        if(atual == null)   //Caso tenha terminado a lista
+            return null;    //Retorna vazio
+        return atual.getWord(); //Retorna o no encontrado
     }
 }

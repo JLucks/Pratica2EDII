@@ -9,7 +9,7 @@ import base.Word;
 
 /**
  *
- * @author Daniel
+ * @authors Jorge & Daniel
  */
 public class NoAVL {
     private Word element;                           // Dados do nó

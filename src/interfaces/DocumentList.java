@@ -7,12 +7,10 @@ package interfaces;
 
 import base.*;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
- * @author jluck_000
+ * @authors Jorge & Daniel
  */
 public class DocumentList extends javax.swing.JPanel {
 
@@ -24,9 +22,9 @@ public class DocumentList extends javax.swing.JPanel {
      * Creates new form DocumentList
      */
     public DocumentList(int numberIds, List<Word> words, List<AddressDoc> docs) {
-        this.numberIds = numberIds;
-        this.words = words;
-        this.docs = docs;
+        this.numberIds = numberIds; //Id atual
+        this.words = words; //Indice Invertido atual
+        this.docs = docs;   //Documentos atuais
         initComponents();
     }
 
@@ -58,10 +56,10 @@ public class DocumentList extends javax.swing.JPanel {
         JTIndices.setColumns(20);
         JTIndices.setRows(5);
         jScrollPane1.setViewportView(JTIndices);
-        for(Word word: this.words){
-            JTIndices.setText(JTIndices.getText()+word.getWord()+" --> ");
-            for(WordInDoc qntWord: word.getQuantityByDocs()){
-                JTIndices.setText(JTIndices.getText()+this.loadNameDoc(qntWord.getIdDoc())+":="+qntWord.getQuantity()+"   ");
+        for(Word word: this.words){ //Enquanto tiver palavras
+            JTIndices.setText(JTIndices.getText()+word.getWord()+" --> ");  //Mostra a palavra
+            for(WordInDoc qntWord: word.getQuantityByDocs()){   //Enquanto tiver indice
+                JTIndices.setText(JTIndices.getText()+this.loadNameDoc(qntWord.getIdDoc())+":="+qntWord.getQuantity()+"   ");   //Mostra o nome do documento e o numero de vezes que palavra ocorre
             }
             JTIndices.setText(JTIndices.getText()+"\n");
         }
@@ -101,16 +99,17 @@ public class DocumentList extends javax.swing.JPanel {
     private void bttGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttGoBackActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Home(this.numberIds,this.words,this.docs));
+        Main.janela.add(new Home(this.numberIds,this.words,this.docs)); //Chama a janela Home passando o id, indice invertido, documentos
         Main.janela.setSize(615,460);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttGoBackActionPerformed
-
+    
+    //Função retorna o nome do doumento referente ao id
     private String loadNameDoc(String idDoc){
         String nameDoc = null;
-        for(AddressDoc doc: this.docs){
-            if(idDoc.equals(doc.getIdDoc())){
-                nameDoc = doc.getAddress().substring(doc.getAddress().lastIndexOf("\\")+1, doc.getAddress().indexOf(".txt"));
+        for(AddressDoc doc: this.docs){ //Enquanto tiver documentos
+            if(idDoc.equals(doc.getIdDoc())){   //Verifica se é o documento
+                nameDoc = doc.getAddress().substring(doc.getAddress().lastIndexOf("\\")+1, doc.getAddress().indexOf(".txt"));   //Pega o nome do documento
             }
         }
         return nameDoc;

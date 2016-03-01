@@ -6,55 +6,54 @@
 package base;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import outros.*;
 
 /**
  *
- * @author Jorge
+ * @authors Jorge & Daniel
  */
 public class InvertedIndex {
     
+    //Função que cria e retorna o indice invertido que recebe as palavras dos documento, o documento e o indice invertido atual
     public static List<Word> getInvertedIndex(String[] words, AddressDoc doc, List<Word> lastInvertedIndex){
-        List<Word> temp = lastInvertedIndex;
-        int i = 0, quantity;
-        boolean flag = true;
-        while(i < words.length){
-            quantity = countWords(words, i);
-            doc.addNumberWords();
-            WordInDoc wrd = new WordInDoc(doc.getIdDoc(),quantity);
-            for(Word w : temp){
-                if(words[i].equals(w.getWord())){
-                    w.getQuantityByDocs().add(wrd);
-                    flag = false;
+        List<Word> temp = lastInvertedIndex;    //Carrega a temporaria com a ultima lista de indices invertidos
+        int i = 0, quantity;    //Contadoras
+        boolean flag = true;    //Caso o indice invertido não contenha a palavra
+        while(i < words.length){    //Enquanto existir palavras
+            quantity = countWords(words, i);    //Chamada ao metodo que retorna o numero de vezes que a palavra ocorreu no documento
+            doc.addNumberWords();   //Adiciona um termo a quantidade de palavras do documento
+            WordInDoc wrd = new WordInDoc(doc.getIdDoc(),quantity); //Cria um indice invertido
+            for(Word w : temp){ //Percorre a lista de indices
+                if(words[i].equals(w.getWord())){   //Verifica se o indice já existe
+                    w.getQuantityByDocs().add(wrd); //Adiciona à palavra do indice mais um indice invertido
+                    flag = false;   //Avisa que tinha a palavra
                     break;
                 }
             }
-            if(flag){
-                ArrayList<WordInDoc> quantityByDoc = new ArrayList<>();
-                quantityByDoc.add(wrd);
-                Word newWord = new Word(words[i],quantityByDoc);
-                temp.add(newWord);
+            if(flag){   //Caso a palavra não exista na lista de indices
+                ArrayList<WordInDoc> quantityByDoc = new ArrayList<>(); //Cria uma lista de indices
+                quantityByDoc.add(wrd); //Adiciona o indice criado a lista de indices
+                Word newWord = new Word(words[i],quantityByDoc);    //Cria uma palavra associada a um indice
+                temp.add(newWord);  //Adiciona a nova palavra a ultima lista de indices invertidos
             }
             else{
-                flag = true;
+                flag = true;    //Reinicia a flag
             }
-            i += quantity;
+            i += quantity;  //Pula as palavras repetidas
         }
-        Collections.sort(temp);
+        Collections.sort(temp); //Ordena novamente o Indice Invertido
       return temp;
     }
     
+    //Função que retorna a quantidade de vezes que uma palavra aparece num vetor ordenado
     private static int countWords(String[] words, int index){
         int count = 1, i = index;
-        if(i+1 < words.length){
-            while(words[i].equals(words[i+1])){
+        if(i+1 < words.length){ //Verifica se existe palavras apos o indice
+            while(words[index].equals(words[i+1])){ //Enquanto a proxima palavra for igual a do indice
                 count++;
                 i++;
-                if((i+1) >= words.length){
+                if((i+1) >= words.length){  //Verifica se a palavra é a ultima
                     break;
                 }
             }
