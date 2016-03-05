@@ -106,9 +106,11 @@ public class TreeRNWord {
                     z.getDad().getDad().setCor(true);   //O avo fica vermelho
                     z = z.getDad().getDad();    //Z recebe o avo
                 }
-                else if(z.equals(z.getDad().getRight())){   //Verifica se z é filho a direita
-                    z = z.getDad(); //Z recebe o pai
-                    leftRotate(z);  //Rotaciona z para esquerda
+                else{ 
+                    if(z.equals(z.getDad().getRight())){   //Verifica se z é filho a direita
+                        z = z.getDad(); //Z recebe o pai
+                        leftRotate(z);  //Rotaciona z para esquerda
+                    }
                     z.getDad().setCor(false);   //O pai de z vira preto
                     z.getDad().getDad().setCor(true);   //O avo de z vira vermelho
                     rightRotate(z.getDad().getDad());   //Rotaciona o avo de z para direita
@@ -122,9 +124,11 @@ public class TreeRNWord {
                     z.getDad().getDad().setCor(true);   //O avo fica vermelho
                     z = z.getDad().getDad();    //Z recebe o avo
                 }
-                else if(z.equals(z.getDad().getLeft())){    //Verifica se z é filho a esquerda
-                    z = z.getDad(); //Z recebe o pai
-                    rightRotate(z); //Rotaciona z para direita
+                else {
+                    if(z.equals(z.getDad().getLeft())){    //Verifica se z é filho a esquerda
+                        z = z.getDad(); //Z recebe o pai
+                        rightRotate(z); //Rotaciona z para direita
+                    }
                     z.getDad().setCor(false);   //O pai de z vira preto
                     z.getDad().getDad().setCor(true);   //O avo de z vira vermelho
                     leftRotate(z.getDad().getDad());    //Rotaciona o avo de z para direita
