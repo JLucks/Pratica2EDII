@@ -18,7 +18,8 @@ public class NoAVL {
     private int height;                             // Altura do nó
     
     public NoAVL(Word element, NoAVL parent){
-        this(element, null, null, null);
+        this.element = element;
+        this.parent = parent;
     }
     
     public NoAVL(Word element, NoAVL left, NoAVL right, NoAVL parent){

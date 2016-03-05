@@ -69,7 +69,7 @@ public class TreeRNWord {
         NoRN x = getRoot(); //No que ira percorrer a arvore
         while(!x.equals(getNil())){ //Enquanto não terminar a arvore
             y = x;  //Guarda o no valido
-            if(z.getElement().compareTo(x.getElement()) < 0){   //Verifica se o novo no é menor que o no atual
+            if(z.getElement().getWord().compareTo(x.getElement().getWord()) < 0){   //Verifica se o novo no é menor que o no atual
                 x = x.getLeft();    //Vai para esquerda
             }
             else{

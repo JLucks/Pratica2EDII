@@ -21,7 +21,7 @@ public class TreeBinaryWord {
         if(x == null)
             setRoot(new NoBinary(element));
         // Se o nó atual for maior que o novo, vai para esquerda
-        else if(x.getElement().compareTo(element) > 0){
+        else if(x.getElement().getWord().compareTo(element.getWord()) > 0){
             // Se tiver elemento continua
             if(x.getLeft() != null)
                 insertB(x.getLeft(), element);
