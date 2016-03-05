@@ -130,10 +130,10 @@ public class Search extends javax.swing.JPanel {
         List<Word> result = new ArrayList<>();  //Lista de palavras encontradas
         for(String word: JTFWord.getText().split("\\s")){   //Quebra a frase de busca em palavras
             word = ReaderDoc.formatString(word);    //Formata a palavra retirando caracteres especiais
-            this.timeStart = System.currentTimeMillis();    //Carrega tempo de inicio do algoritmo
+            this.timeStart = System.nanoTime();    //Carrega tempo de inicio do algoritmo
             Word rs = this.hash.search(word);   //Chama a função de busca do hash
-            this.timeEnd = System.currentTimeMillis();  //Carrega tempo de fim do algoritmo
-            System.out.println("Tempo de Execução da Busca da palavra "+word+" : "+(this.timeEnd-this.timeStart)*0.001);
+            this.timeEnd = System.nanoTime();  //Carrega tempo de fim do algoritmo
+            System.out.println("Tempo de Execução da Busca da palavra "+word+" : "+(this.timeEnd-this.timeStart)/1000000.0+" ms");
             if(rs != null){
                 result.add(rs); //Adiciona palavra encontra a lista de resultados                
             }
@@ -225,12 +225,12 @@ public class Search extends javax.swing.JPanel {
     
     //Função que inicia o hash
     private void loadHash(){
-        this.timeStart = System.currentTimeMillis();
+        this.timeStart = System.nanoTime();
         for(Word word: words){  //Enquanto tiver palavras
             this.hash.insert(word); //Insere a palavra no hash
         }
-        this.timeEnd = System.currentTimeMillis();
-        System.out.println("Tempo de Execução da Inserção: "+(timeEnd-timeStart)*0.001);
+        this.timeEnd = System.nanoTime();
+        System.out.println("Tempo de Execução da Inserção: "+(timeEnd-timeStart)/1000000.0+" ms");
     }
     
     //Função que pega o modo de resolução de conflito
