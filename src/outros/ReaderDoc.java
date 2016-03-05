@@ -24,7 +24,8 @@ public class ReaderDoc {
         Scanner scanner = new Scanner(new FileReader(url)).useDelimiter("\\s"); //Ler apartir do documento quebrando por espaços, tabulações e quebra de linhas
         while (scanner.hasNext()) { //Enquanto não chegar ao final do arquivo
           String word = scanner.next(); //Carrega a palavra
-          temp.add(formatString(word)); //Adiciona a palavra formatada a lista
+          if(!word.equals(""))
+            temp.add(formatString(word)); //Adiciona a palavra formatada a lista
         }
         words = temp.toArray(new String[temp.size()]);  //Transforma a lista em array
         words = new MergeSort().mergeSort(words);   //Usa o mergeSort para ordenar o array
