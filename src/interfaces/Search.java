@@ -15,7 +15,7 @@ import outros.ReaderDoc;
 
 /**
  *
- * @author jluck_000
+ * @authors Jorge & Daniel
  */
 public class Search extends javax.swing.JPanel {
 
@@ -30,13 +30,12 @@ public class Search extends javax.swing.JPanel {
      * Creates new form Search
      */
     public Search(int numberIds, List<Word> words, List<AddressDoc> docs) {
-        this.numberIds = numberIds;
-        this.words = words;
-        this.docs = docs;
-        this.hash = new Hash(loadC(), loadMode());
-        resetTemp();
-        printIdHash();
-        loadHash();
+        this.numberIds = numberIds; //Id atual
+        this.words = words; //Indice Invertido atual
+        this.docs = docs;   //Documentos atuais
+        this.hash = new Hash(loadC(), loadMode());  //Inicializa hash
+        printIdHash();  //Chamada a função que imprime a identificação do modo de resolução de conflitos do hash
+        loadHash(); //Chamada a função que insere o indice invertido no hash
         initComponents();
     }
 
@@ -121,34 +120,32 @@ public class Search extends javax.swing.JPanel {
     private void bttGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttGoBackActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Home(this.numberIds,this.words,this.docs));
+        Main.janela.add(new Home(this.numberIds,this.words,this.docs)); //Chama a janela Home passando o id, indice invertido, documentos
         Main.janela.setSize(615,460);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttGoBackActionPerformed
 
     private void bttSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSearchActionPerformed
         JTResult.setText("Resultado:");
-        List<Word> result = new ArrayList<>();
-        for(String word: JTFWord.getText().split("\\s")){
-            word = ReaderDoc.formatString(word);
-            if(word.length() >= this.hash.getC()){
-                this.timeStart = System.currentTimeMillis();
-                Word rs = this.hash.search(word);                
-                this.timeEnd = System.currentTimeMillis();
-                System.out.println("Tempo de Execução da Busca da palavra "+word+" : "+(this.timeEnd-this.timeStart)*0.001);
-                resetTemp();
-                if(rs != null){
-                    result.add(rs);                    
-                }
+        List<Word> result = new ArrayList<>();  //Lista de palavras encontradas
+        for(String word: JTFWord.getText().split("\\s")){   //Quebra a frase de busca em palavras
+            word = ReaderDoc.formatString(word);    //Formata a palavra retirando caracteres especiais
+            this.timeStart = System.currentTimeMillis();    //Carrega tempo de inicio do algoritmo
+            Word rs = this.hash.search(word);   //Chama a função de busca do hash
+            this.timeEnd = System.currentTimeMillis();  //Carrega tempo de fim do algoritmo
+            System.out.println("Tempo de Execução da Busca da palavra "+word+" : "+(this.timeEnd-this.timeStart)*0.001);
+            if(rs != null){
+                result.add(rs); //Adiciona palavra encontra a lista de resultados                
             }
         }
-        List<String> namesDocs = ordinateByRelevance(result);
+        List<String> namesDocs = ordinateByRelevance(result);   //Chamada a função que ordena a lista de resultados por relevancia e retorna uma lista de documentos
         for(String nameDoc: namesDocs)
             JTResult.setText(JTResult.getText()+"\n"+ loadNameDoc(nameDoc));
     }//GEN-LAST:event_bttSearchActionPerformed
 
+    //Função que imprime o identificador
     private void printIdHash(){
-        System.out.print("Hash com resolução de conflito via ");
+        System.out.print("Hash com C = "+this.hash.getC()+" com M = "+this.hash.getM()+" com resolução de conflito via ");
         switch(this.hash.getMode()){
             case 0:
                 System.out.println("Lista Encadeada");
@@ -165,95 +162,96 @@ public class Search extends javax.swing.JPanel {
         }
     }
     
-    private void resetTemp(){        
-        this.timeStart = 0L;
-        this.timeEnd = 0L;
-    }
-    
+    //Função que ordena por relevância
     private List<String> ordinateByRelevance(List<Word> A){
         List<String> result = new ArrayList<>();
-        Relevance[] r = ordinateRelevance(loadRelevance(A));
+        Relevance[] r = ordinateRelevance(loadRelevance(A));    //Chamada a função que ordena a relevância
         int i = 0;
-        while(i < r.length){
-            if(r[i].getRelevance() < getLimit()){
+        while(i < r.length){    //Enquanto existir elementos
+            if(r[i].getRelevance() < getLimit()){   //Verifica se a relevancia é maior igual ao limite
                 break;
             }
             else{
-                result.add(r[i].getIdDoc());
+                result.add(r[i].getIdDoc());    //Adiciona o id do documento a lista
             }
             i++;
         }
         return result;
     }
     
+    //Função que ordenar a relevância
     private Relevance[] ordinateRelevance(List<Relevance> A){
-        Collections.sort(A);
-        Relevance[] result = A.toArray(new Relevance[A.size()]);                
+        Collections.sort(A);    //Ordena a lista de relenvancia
+        Relevance[] result = A.toArray(new Relevance[A.size()]);    //Transforma a lista em array                
         return result;
     }
     
+    //Função que carrega a relevância
     private List<Relevance> loadRelevance(List<Word> A){
-        List<Relevance> result = new ArrayList<>();
-        Relevance relevance;
-        boolean exist = false;
-        for(Word word: A){
-            for(WordInDoc doc: word.getQuantityByDocs()){
-                for(Relevance rs: result){
-                    if(rs.getIdDoc().equals(doc.getIdDoc())){
-                        exist = true;
-                        rs.addW(doc.getQuantity(), this.words.size(), word.getQuantityByDocs().size());
+        List<Relevance> result = new ArrayList<>(); //Lista de relevancia resultante
+        Relevance relevance;    
+        boolean exist = false;  //Caso exista a relevancia do documento
+        for(Word word: A){  //Enquanto tiver palavras
+            for(WordInDoc doc: word.getQuantityByDocs()){   //Enquanto tiver indices
+                for(Relevance rs: result){  //Enquanto tiver relevancias
+                    if(rs.getIdDoc().equals(doc.getIdDoc())){   //Verifica se o id da relevancia é o mesmo do documento
+                        exist = true;   //Avisa que existe
+                        rs.addW(doc.getQuantity(), this.words.size(), word.getQuantityByDocs().size()); //Chamada ao metodo que carrega o w da função de calculo da relevancia
                         break;
                     }
                 }
-                if(!exist){
-                    relevance = new Relevance(doc.getIdDoc(), getNumberWords(doc.getIdDoc()));
-                    relevance.addW(doc.getQuantity(), this.words.size(), word.getQuantityByDocs().size());
-                    result.add(relevance);
+                if(!exist){ //Verifica se existe
+                    relevance = new Relevance(doc.getIdDoc(), getNumberWords(doc.getIdDoc()));  //Cria a relevancia
+                    relevance.addW(doc.getQuantity(), this.words.size(), word.getQuantityByDocs().size());  //Calcula o w da relevancia
+                    result.add(relevance);  //Adiciona a relevancia a lista de relevancia
                 }
                 else{
-                    exist = false;
+                    exist = false;  //Reinicia a flag
                 }
             }
         }
         return result;
     }
     
+    //Função que retorna o numero de termos de um documento
     private int getNumberWords(String id){
-        for(AddressDoc documents:this.docs){
-            if(documents.getIdDoc().equals(id)){
+        for(AddressDoc documents:this.docs){    //Enquanto tiver documentos
+            if(documents.getIdDoc().equals(id)){    //Verifica se é o id buscado
                 return documents.getNumberWords();
             }
         }
         return 0;
     }
     
+    //Função que inicia o hash
     private void loadHash(){
         this.timeStart = System.currentTimeMillis();
-        for(Word word: words){
-            this.hash.insert(word);
+        for(Word word: words){  //Enquanto tiver palavras
+            this.hash.insert(word); //Insere a palavra no hash
         }
         this.timeEnd = System.currentTimeMillis();
         System.out.println("Tempo de Execução da Inserção: "+(timeEnd-timeStart)*0.001);
-        resetTemp();
     }
     
+    //Função que pega o modo de resolução de conflito
     private int loadMode(){
         int mode = -1;
-        while(mode == -1){
+        while(mode == -1){  //Enquanto nao for escolhida uma opção valida
             String sMode = JOptionPane.showInputDialog("Tratamento da colisão:Digite 0->Lista\t1->Arvore Binaria\t2->Arvore AVL\t3->Arvore Rubro-Negra");
-            if(sMode.equals("0")||sMode.equals("1")||sMode.equals("2")||sMode.equals("3")){
-		mode = Integer.parseInt(sMode);	
+            if(sMode.equals("0")||sMode.equals("1")||sMode.equals("2")||sMode.equals("3")){ //Verifica se a opção é valida
+		mode = Integer.parseInt(sMode); //Passa para int
             }
         }
         return mode;
     }
     
+    //Função que pega o c do hash
     private int loadC(){
         int mode = -1;
-        while(mode == -1){
+        while(mode == -1){  //Enquanto nao for escolhida uma opção valida
             String sMode = JOptionPane.showInputDialog("Digite um valor para C:");
             try{
-		mode = Integer.parseInt(sMode);	
+		mode = Integer.parseInt(sMode); //Passa para int
             }catch(Exception e){
                 System.err.println(e);
                 mode = -1;
@@ -262,11 +260,12 @@ public class Search extends javax.swing.JPanel {
         return mode;
     }
     
+    //Função retorna o nome do doumento referente ao id
     private String loadNameDoc(String idDoc){
         String nameDoc = null;
-        for(AddressDoc doc: this.docs){
-            if(idDoc.equals(doc.getIdDoc())){
-                nameDoc = doc.getAddress().substring(doc.getAddress().lastIndexOf("\\")+1, doc.getAddress().length());
+        for(AddressDoc doc: this.docs){ //Enquanto tiver documentos
+            if(idDoc.equals(doc.getIdDoc())){   //Verifica se é o documento
+                nameDoc = doc.getAddress().substring(doc.getAddress().lastIndexOf("\\")+1, doc.getAddress().length());  //Pega o nome do documento
             }
         }
         return nameDoc;

@@ -11,13 +11,13 @@ import java.util.List;
 
 /**
  *
- * @author jluck_000
+ * @authors Jorge & Daniel
  */
 public class Home extends javax.swing.JPanel {
 
-    private List<Word> words;
-    private List<AddressDoc> docs;
-    private int numberIds;
+    private List<Word> words;   //Indice Invertido
+    private List<AddressDoc> docs;  //Documentos
+    private int numberIds;  //Id
     
     /**
      * Creates new form Homes
@@ -135,7 +135,7 @@ public class Home extends javax.swing.JPanel {
     private void bttAddDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttAddDocActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new DocumentFeeder(numberIds,words,docs));
+        Main.janela.add(new DocumentFeeder(numberIds,words,docs));  //Chama a janela de adicionar passando o id, indice invertido, documentos
         Main.janela.setSize(620, 360);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttAddDocActionPerformed
@@ -143,7 +143,7 @@ public class Home extends javax.swing.JPanel {
     private void bttListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttListActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new DocumentList(this.numberIds,this.words,this.docs));
+        Main.janela.add(new DocumentList(this.numberIds,this.words,this.docs)); //Chama a janela de listar passando o id, indice invertido, documentos
         Main.janela.setSize(430, 370);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttListActionPerformed
@@ -151,15 +151,15 @@ public class Home extends javax.swing.JPanel {
     private void bttSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSearchActionPerformed
         Main.janela.setVisible(false);
         Main.janela.remove(this);
-        Main.janela.add(new Search(this.numberIds,this.words,this.docs));
+        Main.janela.add(new Search(this.numberIds,this.words,this.docs));   //Chama a janela de busca passando o id, indice invertido, documentos
         Main.janela.setSize(430, 360);
         Main.janela.setVisible(true);
     }//GEN-LAST:event_bttSearchActionPerformed
 
     private void bttResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttResetActionPerformed
-        this.numberIds = 1;
-        this.words = new ArrayList<>();
-        this.docs = new ArrayList<>();
+        this.numberIds = 1; //Reseta id
+        this.words = new ArrayList<>(); //Reseta palavras
+        this.docs = new ArrayList<>();  //Reseta documentos
     }//GEN-LAST:event_bttResetActionPerformed
 
 

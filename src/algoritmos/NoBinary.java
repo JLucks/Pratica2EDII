@@ -9,7 +9,7 @@ import base.*;
 
 /**
  *
- * @author Daniel
+ * @authors Jorge & Daniel
  */
 public class NoBinary {
     

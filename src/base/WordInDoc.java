@@ -7,11 +7,11 @@ package base;
 
 /**
  *
- * @author Jorge
+ * @authors Jorge & Daniel
  */
 public class WordInDoc {
-    private String idDoc;
-    private int quantity;
+    private String idDoc;   //Id do documento
+    private int quantity;   //Quantidade de vezes de uma palavra
 
     public WordInDoc(String idDoc, int quantity){
         this.idDoc = idDoc;

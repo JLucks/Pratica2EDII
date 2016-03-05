@@ -9,11 +9,12 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jorge
+ * @authors Jorge & Daniel
  */
 public class Word implements Comparable<Word>{
-    private String word;
-    private ArrayList<WordInDoc> quantityByDocs;
+    //Variaveis
+    private String word;    //Palavra
+    private ArrayList<WordInDoc> quantityByDocs;    //Indice Invertido da palavra
     
     public Word(){
         this.quantityByDocs = new ArrayList<>();
@@ -53,6 +54,7 @@ public class Word implements Comparable<Word>{
     }
 
     @Override
+    //Função de Comparação
     public int compareTo(Word o) {
         return this.word.compareTo(o.word);
     }

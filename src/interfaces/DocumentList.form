@@ -84,7 +84,7 @@
             <Property name="rows" type="int" value="5"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="for(Word word: this.words){   &#xa;    JTIndices.setText(JTIndices.getText()+word.getWord()+&quot; --&gt; &quot;);&#xa;    for(WordInDoc qntWord: word.getQuantityByDocs()){&#xa;        JTIndices.setText(JTIndices.getText()+this.loadNameDoc(qntWord.getIdDoc())+&quot;:=&quot;+qntWord.getQuantity()+&quot;   &quot;);&#xa;    }    &#xa;    JTIndices.setText(JTIndices.getText()+&quot;\n&quot;);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="for(Word word: this.words){ //Enquanto tiver palavras&#xa;    JTIndices.setText(JTIndices.getText()+word.getWord()+&quot; --&gt; &quot;);  //Mostra a palavra&#xa;    for(WordInDoc qntWord: word.getQuantityByDocs()){   //Enquanto tiver indice&#xa;        JTIndices.setText(JTIndices.getText()+this.loadNameDoc(qntWord.getIdDoc())+&quot;:=&quot;+qntWord.getQuantity()+&quot;   &quot;);   //Mostra o nome do documento e o numero de vezes que palavra ocorre&#xa;    }    &#xa;    JTIndices.setText(JTIndices.getText()+&quot;\n&quot;);&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>
