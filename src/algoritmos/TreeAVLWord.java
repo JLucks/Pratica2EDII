@@ -28,7 +28,7 @@ public class TreeAVLWord {
             // Se estiver vazio insere, o pai é o nó atual
             else{
                 x.setLeft(new NoAVL(element, x));
-                //balanceAVL(x);
+                balanceAVL(x);
             }
         }
         // Se o nó atual for menor que o novo, vai para esqueda
@@ -37,7 +37,7 @@ public class TreeAVLWord {
                 insertAVL(x.getRight(), element);
             else{
                 x.setRight(new NoAVL(element, x));
-                //balanceAVL(x);
+                balanceAVL(x);
             }
         }
         
@@ -83,14 +83,16 @@ public class TreeAVLWord {
             if(balancingFactor(x.getLeft()) == -1)
                 x = rotateDoubleLeft(x);
             else{
-                x = rotateLeft(x);
+                if(x.getRight() != null)
+                    x = rotateLeft(x);
             }
         }
         else if(balancingFactor(x) == -2){
             if(balancingFactor(x.getRight()) == 1)
                 x = rotateDoubleRight(x);
             else{
-                x = rotateRight(x);
+                if(x.getLeft()!= null)
+                    x = rotateRight(x);
             }
         }
         
